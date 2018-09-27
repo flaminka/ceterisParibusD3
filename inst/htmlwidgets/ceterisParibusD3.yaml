@@ -1,0 +1,5 @@
+dependencies:
+  - name: d3
+    version: 5.7.0
+    src: "htmlwidgets/lib/d3-5.7.0"
+    script: d3.js
