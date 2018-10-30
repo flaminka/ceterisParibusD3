@@ -1,92 +1,142 @@
 library("DALEX")
 library("randomForest")
 library("ceterisParibus")
+library("rpart")
+library("e1071")
 library(ceterisParibusD3)
 
-
-######### first example: one variable, 2 obs, 1 model
-
+####################################
+# example 1 - ICE lines with points
+####################################
 apartments_rf_model <- randomForest(m2.price ~ construction.year + surface + floor +
-                                      no.rooms + district, 
+                                      no.rooms + district,
                                     data = apartments)
 
 explainer_rf <- explain(apartments_rf_model,
-                        data = apartmentsTest[,2:6], 
+                        data = apartmentsTest[,2:6],
                         y = apartmentsTest$m2.price)
 
-apartments_A <- apartmentsTest[c(958, 353),]
-
+apartments_A <- apartmentsTest[958,]
 cp_rf_A <- ceteris_paribus(explainer_rf, apartments_A, y = apartments_A$m2.price)
 
-#plot(cp_rf_A, selected_variables = c("surface"), show_observations = FALSE)
-ceterisParibusD3(cp_rf_A, selected_variables = c("surface"),  width = 500, height = 300)
+plot(cp_rf_A, show_profiles = TRUE, show_observations = TRUE,
+     selected_variables = c("surface","construction.year"))
+
+ceterisParibusD3(cp_rf_A, show_profiles = TRUE, show_observations = TRUE,
+                 selected_variables = c("surface","construction.year"))
+
+####################################
+# example 2 ICE lines colored by categorical variable
+####################################
+apartments_C <- select_sample(apartmentsTest, n = 15)
+cp_rf_C <- ceteris_paribus(explainer_rf, apartments_C, y = apartments_C$m2.price)
+
+plot(cp_rf_C,
+     show_profiles = TRUE, show_observations = FALSE,
+     color = "district", alpha = 1,
+     selected_variables = c("surface","construction.year", "district", 'no.rooms', 'floor'))
+
+# no need to include color variable in selected_variables
+ceterisParibusD3(cp_rf_C, show_profiles = TRUE, show_observations = FALSE,
+                 color = 'district', alpha_ices = 1,
+                 selected_variables = c("surface","construction.year", 'no.rooms', 'floor'))
+
+####################################
+# example 3 ICE lines colored by contiuous variable
+####################################
+apartments_C <- select_sample(apartmentsTest, n = 15)
+cp_rf_C <- ceteris_paribus(explainer_rf, apartments_C, y = apartments_C$m2.price)
+
+plot(cp_rf_C,
+     show_profiles = TRUE, show_observations = TRUE,
+     color = "surface", alpha = 1,
+     selected_variables = c("surface","construction.year"))
+
+ceterisParibusD3(cp_rf_C, show_profiles = TRUE, show_observations = TRUE,
+                 color = 'surface', alpha_ices = 1,
+                 selected_variables = c("surface","construction.year"))
+
+####################################
+# example 4 ICE lines, rugs, residuals, points, all with custom colors
+####################################
+apartments_C <- select_sample(apartmentsTest, n = 15)
+cp_rf_C <- ceteris_paribus(explainer_rf, apartments_C, y = apartments_C$m2.price)
+
+plot(cp_rf_C,
+     show_profiles = TRUE, show_observations = TRUE, show_rugs = TRUE,
+     show_residuals = TRUE,
+     color = "blue", color_points = "orange", color_residuals = "red", color_rugs = "green",
+     alpha = 0.3, alpha_points = 0.3, alpha_residuals = 0.5, alpha_rugs = 1,
+     size_points = 4, size_rugs = 0.5,
+     selected_variables = c("surface","construction.year"))
+
+ceterisParibusD3(cp_rf_C,
+     show_profiles = TRUE, show_observations = TRUE, show_rugs = TRUE,
+     show_residuals = TRUE,
+     color = "blue", color_points = "orange", color_residuals = "red", color_rugs = "green",
+     alpha_ices = 0.3, alpha_points = 0.3, alpha_residuals = 0.5, alpha_rugs = 1,
+     size_points = 4,  size_rugs = 0.5,
+     selected_variables = c("surface","construction.year"))
+
+####################################
+# example 5 ICE lines with PDP lines
+####################################
+
+cp_rf_C <- ceteris_paribus(explainer_rf, apartments_C, y = apartments_C$m2.price)
+
+plot(cp_rf_C,
+     show_observations = FALSE, show_rugs = TRUE,
+     show_residuals = TRUE, color_residuals = "red", size_residuals = 2,
+     selected_variables = c("surface","construction.year")) +
+  ceteris_paribus_layer(cp_rf_C,
+                        show_observations = FALSE, show_rugs = FALSE,
+                        aggregate_profiles = mean, size = 2, alpha = 1,
+                        selected_variables = c("surface","construction.year"))
+
+ceterisParibusD3(cp_rf_C,
+     show_observations = FALSE, show_rugs = TRUE,
+     show_residuals = TRUE, color_residuals = "red", size_residuals = 2,
+     selected_variables = c("surface","construction.year"),
+     aggregate_profiles = 'mean', size_pdps = 5, alpha_pdps = 1)
+
+####################################
+# example 6 many models
+####################################
+
+apartments_svm_model <- svm(m2.price ~ construction.year + surface + floor +
+                              no.rooms + district, data = apartments)
+
+apartments_rpart_model <- best.rpart(m2.price ~ construction.year + surface + floor + no.rooms + district, data = apartments)
+
+explainer_svm <- explain(apartments_svm_model,
+                         data = apartmentsTest[,2:6], y = apartmentsTest$m2.price)
+
+explainer_rpart <- explain(apartments_rpart_model,
+                           data = apartmentsTest[,2:6], y = apartmentsTest$m2.price)
+
+apartments_E <- apartmentsTest[958,]
+cp_rf_E <- ceteris_paribus(explainer_svm, apartments_E, y = apartments_E$m2.price)
+
+apartments_F <- apartmentsTest[958,]
+cp_rpart_F <- ceteris_paribus(explainer_rpart, apartments_F, y = apartments_F$m2.price)
 
 
-######### second example: one variable, 2 obs, 2 models
+plot(cp_rf_A, cp_rf_E, cp_rpart_F,
+     color = "_label_",
+     selected_variables = c("surface","construction.year"))
 
-apartments_lm_model <- lm(m2.price ~ construction.year + surface + floor + 
-                            no.rooms + district, data = apartments)
-
-apartments_rf_model <-randomForest(m2.price ~ construction.year + surface + floor + 
-                                     no.rooms + district, data = apartments)
-
-explainer_rf <- explain(apartments_rf_model, 
-                        data = apartmentsTest[,2:6], y = apartmentsTest$m2.price)
-explainer_lm <- explain(apartments_lm_model, 
-                        data = apartmentsTest[,2:6], y = apartmentsTest$m2.price)
-
-new_apartment <- apartmentsTest[c(1,2), ]
-
-cp_rf <- ceteris_paribus(explainer_rf, observation = new_apartment)
-cp_lm <- ceteris_paribus(explainer_lm, observation = new_apartment)
-
-#plot(cp_rf, cp_lm, selected_variables = c("surface"), color = '_label_', show_observations = FALSE)
-
-ceterisParibusD3(cp_rf, cp_lm, selected_variables = c("surface"), color = '_label_',  width = 500, height = 300)
-
-######### third example: one variable, 2 obs, 1 model, 3 classes
-
-model <- randomForest(status ~ gender + age + hours + evaluation + salary, data = HR)
-
-pred1 <- function(m, x)   predict(m, x, type = "prob")[,1]
-pred2 <- function(m, x)   predict(m, x, type = "prob")[,2]
-pred3 <- function(m, x)   predict(m, x, type = "prob")[,3]
-
-explainer_rf_fired <- explain(model, data = HR[,1:5], 
-                              y = HR$status == "fired", 
-                              predict_function = pred1, label = "fired")
-explainer_rf_ok <- explain(model, data = HR[,1:5], 
-                           y = HR$status == "ok", 
-                           predict_function = pred2, label = "ok")
-explainer_rf_promoted <- explain(model, data = HR[,1:5], 
-                                 y = HR$status == "promoted", 
-                                 predict_function = pred3, label = "promoted")
-
-cp_rf1 <- ceteris_paribus(explainer_rf_fired, HR[1,])
-cp_rf2 <- ceteris_paribus(explainer_rf_ok, HR[1,])
-cp_rf3 <- ceteris_paribus(explainer_rf_promoted, HR[1,])
-
-#plot(cp_rf1, cp_rf2, cp_rf3, color="_label_", selected_variables = c('age'), show_observations = FALSE)
-
-ceterisParibusD3(cp_rf1, cp_rf2, cp_rf3, selected_variables = c('age'), color = "_label_",
-                 width = 500, height = 300)
-
-######### forth example: two variables, many observations, 1 model
-
-apartments_rf_model <- randomForest(m2.price ~ construction.year + surface + floor +
-                                      no.rooms + district, 
-                                    data = apartments)
-
-explainer_rf <- explain(apartments_rf_model,
-                        data = apartmentsTest[,2:6], 
-                        y = apartmentsTest$m2.price)
+ceterisParibusD3(cp_rf_A, cp_rf_E, cp_rpart_F,
+     color = "_label_",
+     selected_variables = c("surface","construction.year"))
 
 
-apartments_B <- select_neighbours(apartmentsTest, apartmentsTest[958,], n = 15)
-cp_rf_B <- ceteris_paribus(explainer_rf, apartments_B, y = apartments_B$m2.price)
+####################################
+# example 7 categorical with numerical variables
+####################################
 
+plot(cp_rf_A, show_profiles = TRUE, show_observations = TRUE,
+     selected_variables = c("surface","district"))
 
-#plot(cp_rf_B,  show_observations = FALSE, selected_variables = c("surface","construction.year"), color='_label_')
+ceterisParibusD3(cp_rf_A, show_profiles = TRUE, show_observations = TRUE,
+     selected_variables = c("surface","district"))
 
-ceterisParibusD3(cp_rf_B, selected_variables = c("surface","construction.year"), color = "_label_",
-                 width = 500, height = 300)
