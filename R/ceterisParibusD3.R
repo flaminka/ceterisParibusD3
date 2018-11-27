@@ -29,7 +29,13 @@ ceterisParibusD3 <- function(model, ...,
                              show_observations = TRUE,
                              show_rugs = NULL,
                              show_residuals = NULL,
-                             aggregate_profiles = NULL
+                             aggregate_profiles = NULL,
+                             font_size_titles = NULL,
+                             font_size_legend = NULL,
+                             font_size_axes = NULL,
+                             font_size_tootlips = NULL,
+                             font_size_table = NULL,
+                             add_table = NULL
 ) {
 
     # prepare data
@@ -117,7 +123,13 @@ ceterisParibusD3 <- function(model, ...,
       show_observations = show_observations,
       show_rugs = show_rugs,
       show_residuals = show_residuals,
-      aggregate_profiles = aggregate_profiles
+      aggregate_profiles = aggregate_profiles,
+      font_size_titles = font_size_titles,
+      font_size_legend = font_size_legend,
+      font_size_axes = font_size_axes,
+      font_size_tootlips = font_size_tootlips,
+      font_size_table = font_size_table,
+      add_table = add_table
     )
 
     # pass the data and settings using 'x'
