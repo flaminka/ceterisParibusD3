@@ -10,9 +10,9 @@ HTMLWidgets.widget({
     var instance = null;
     //var id = '#'+el.id;
 
-    var createPlot = function(div, data, dataObs, options){
+ var createPlot = function(div, data, dataObs, options){
        return new CeterisParibusPlot(div, data, dataObs, options);
-    }
+    };
 
 
     var CeterisParibusPlot = function(div, data, dataObs, options){
@@ -22,7 +22,7 @@ HTMLWidgets.widget({
 
     CeterisParibusPlot.prototype.__init__ = function(div, data, dataObs, options) {
 
-        this.default_height = 200;
+        this.default_height = 400;
         this.default_width = 600;
         this.default_margins = {top: 10, right: 10, bottom: 40, left: 40};
 
@@ -44,7 +44,7 @@ HTMLWidgets.widget({
         this.default_color_pdps = 'grey';
         this.default_no_colors = 3;
 
-        this.default_font_size_titles = 16;
+        this.default_font_size_titles = 14;
         this.default_font_size_legend = 12;
         this.default_font_size_axes = 12;
         this.default_font_size_tootlips = 10;
@@ -80,7 +80,7 @@ HTMLWidgets.widget({
 
         this.is_color_variable_ = false;
 
-        if (options.hasOwnProperty('color') && options.color != null ){
+        if (options.hasOwnProperty('color') && options.color !== null ){
             this.color_ = options.color;
              if (dataObs[0].hasOwnProperty(options.color)) { this.is_color_variable_  = true;}
         } else {
@@ -93,31 +93,44 @@ HTMLWidgets.widget({
             this.no_colors_ = this.default_no_colors;
         }
 
+        this.add_table_ = this.default_add_table;
+
+        if (options.hasOwnProperty('add_table') && options.add_table !== null ){
+            this.add_table_ = options.add_table;
+        }
 
 
         this.categorical_order_ = options.categorical_order;
 
-        if (options.hasOwnProperty('height') && options.height != null){
+        if (options.hasOwnProperty('height') && options.height !== null){
             this.chartHeight_ = options.height;
         } else {
             this.chartHeight_ = this.default_height;
         }
 
-        if (options.hasOwnProperty('width') && options.width != null){
+        if (options.hasOwnProperty('width') && options.width !== null){
             this.chartWidth_ = options.width;
         } else {
             this.chartWidth_ = this.default_width;
         }
 
+        this.visWidth_ = this.chartWidth_;
+        this.visHeight_ = this.chartHeight_;
+
+        if(this.add_table_){
+            this.chartHeight_ = this.chartHeight_/2;
+        }
+
+
 
         //handling graphical options
-        if (options.hasOwnProperty('size_rugs') && options.size_rugs != null){
+        if (options.hasOwnProperty('size_rugs') && options.size_rugs !== null){
             this.size_rugs_ = options.size_rugs;
         } else {
             this.size_rugs_ = this.default_size_rugs;
         }
 
-        if (options.hasOwnProperty('alpha_rugs') && options.alpha_rugs != null){
+        if (options.hasOwnProperty('alpha_rugs') && options.alpha_rugs !== null){
             this.alpha_rugs_ = options.alpha_rugs;
         } else {
             this.alpha_rugs_ = this.default_alpha_rugs;
@@ -127,63 +140,63 @@ HTMLWidgets.widget({
         this.color_points_ = options.color_points;
         this.color_residuals_ = options.color_residuals;
 
-        if (options.hasOwnProperty('color_pdps') && options.color_pdps != null){
+        if (options.hasOwnProperty('color_pdps') && options.color_pdps !== null){
             this.color_pdps_ = options.color_pdps;
         } else {
             this.color_pdps_ = this.default_color_pdps;
         }
 
 
-        if (options.hasOwnProperty('alpha_residuals') && options.alpha_residuals != null){
+        if (options.hasOwnProperty('alpha_residuals') && options.alpha_residuals !== null){
             this.alpha_residuals_ = options.alpha_residuals;
         } else {
             this.alpha_residuals_ = this.default_alpha_residuals;
         }
 
-        if (options.hasOwnProperty('alpha_points') && options.alpha_points != null){
+        if (options.hasOwnProperty('alpha_points') && options.alpha_points !== null){
             this.alpha_points_ = options.alpha_points;
         } else {
             this.alpha_points_ = this.default_alpha_points;
         }
 
-        if (options.hasOwnProperty('alpha_ices') && options.alpha_ices != null){
+        if (options.hasOwnProperty('alpha_ices') && options.alpha_ices !== null){
             this.alpha_ices_ = options.alpha_ices;
         } else {
             this.alpha_ices_ = this.default_alpha_ices;
         }
 
-        if (options.hasOwnProperty('alpha_pdps') && options.alpha_pdps != null){
+        if (options.hasOwnProperty('alpha_pdps') && options.alpha_pdps !== null){
             this.alpha_pdps_ = options.alpha_pdps;
         } else {
             this.alpha_pdps_ = this.default_alpha_pdps;
         }
 
-        if (options.hasOwnProperty('size_points') && options.size_points != null){
+        if (options.hasOwnProperty('size_points') && options.size_points !== null){
             this.size_points_ = options.size_points;
         } else {
             this.size_points_ = this.default_size_points;
         }
 
-        if (options.hasOwnProperty('size_residuals') && options.size_residuals != null){
+        if (options.hasOwnProperty('size_residuals') && options.size_residuals !== null){
             this.size_residuals_ = options.size_residuals;
         } else {
             this.size_residuals_ = this.default_size_residuals;
         }
 
-        if (options.hasOwnProperty('size_ices') && options.size_ices != null){
+        if (options.hasOwnProperty('size_ices') && options.size_ices !== null){
             this.size_ices_ = options.size_ices;
         } else {
             this.size_ices_ = this.default_size_ices;
         }
 
-        if (options.hasOwnProperty('size_pdps') && options.size_pdps != null){
+        if (options.hasOwnProperty('size_pdps') && options.size_pdps !== null){
             this.size_pdps_ = options.size_pdps;
         } else {
             this.size_pdps_ = this.default_size_pdps;
         }
 
 
-        if (options.hasOwnProperty('font_size_titles') && options.font_size_titles != null){
+        if (options.hasOwnProperty('font_size_titles') && options.font_size_titles !== null){
             this.font_size_titles_ = options.font_size_titles;
             this.is_set_font_size_titles_ = true;
         } else {
@@ -191,7 +204,7 @@ HTMLWidgets.widget({
             this.is_set_font_size_titles_ = false;
         }
 
-        if (options.hasOwnProperty('font_size_legend') && options.font_size_legend != null){
+        if (options.hasOwnProperty('font_size_legend') && options.font_size_legend !== null){
             this.font_size_legend_ = options.font_size_legend;
             this.is_set_font_size_legend_ = true;
         } else {
@@ -199,7 +212,7 @@ HTMLWidgets.widget({
             this.is_set_font_size_legend_ = false;
         }
 
-        if (options.hasOwnProperty('font_size_axes') && options.font_size_axes != null){
+        if (options.hasOwnProperty('font_size_axes') && options.font_size_axes !== null){
             this.font_size_axes_ = options.font_size_legend;
             this.is_set_font_size_axes_ = true;
         } else {
@@ -207,7 +220,7 @@ HTMLWidgets.widget({
             this.is_set_font_size_axes_ = false;
         }
 
-        if (options.hasOwnProperty('font_size_tootlips') && options.font_size_tootlips != null){
+        if (options.hasOwnProperty('font_size_tootlips') && options.font_size_tootlips !== null){
             this.font_size_tootlips_ = options.font_size_tootlips;
             this.is_set_font_size_tootlips_ = true;
         } else {
@@ -215,7 +228,7 @@ HTMLWidgets.widget({
             this.is_set_font_size_tootlips_ = false;
         }
 
-        if (options.hasOwnProperty('font_size_table') && options.font_size_table != null){
+        if (options.hasOwnProperty('font_size_table') && options.font_size_table !== null){
             this.font_size_table_ = options.font_size_table;
             this.is_set_font_size_table_ = true;
         } else {
@@ -223,6 +236,10 @@ HTMLWidgets.widget({
             this.is_set_font_size_table_ = false;
         }
 
+
+        if( isFinite(((this.dataObs_[0]['_y_']+'').split('.')[1])) ){
+             this.formatPredTooltip_ = '.'+ ((this.dataObs_[0]['_y_']+'').split('.')[1]).length+'f';
+        } else {this.formatPredTooltip_ = '.0f'}
 
 
 
@@ -244,7 +261,7 @@ HTMLWidgets.widget({
                         .attr('class', 'ceterisParibusD3 mainDivCP')
                         .style('height', this.chartHeight_+'px')
                         .style('width', this.chartWidth_+'px')
-                        .style('display',"block")
+                        .style('display',"table")
                         .append('table').append('tbody').append('tr');
 
         this.plotWidth_ = this.is_color_variable_ ? this.chartWidth_*0.8 : this.chartWidth_;
@@ -270,10 +287,10 @@ HTMLWidgets.widget({
                                 .append('g').attr('class', 'legendAreaCP');
 
             legendAreaCP.append("text").attr('class', 'legendTitle')
-            .attr('y', this.chartHeight_/2*0.9).style('font', this.font_size_legend_ + 'px sans-serif').text(this.color_+":");
+            .attr('y', this.chartHeight_*0.1 ).style('font', this.font_size_legend_ + 'px sans-serif').text(this.color_+":");//this.chartHeight_/2*0.9
 
             var legendKeys = legendAreaCP.append("g").attr('class', 'legendKeysGroup')
-            .attr("text-anchor", "start").attr("transform", "translate(" + ((this.chartWidth_ - this.plotWidth_)/4) + "," + this.chartHeight_/2 +")")
+            .attr("text-anchor", "start").attr("transform", "translate(" + ((this.chartWidth_ - this.plotWidth_)*0.1) + "," + this.chartHeight_*0.2 +")")
                                     .selectAll("g").data(this.scaleColor_.domain()).enter().append("g")
                                     .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
 
@@ -318,12 +335,6 @@ HTMLWidgets.widget({
 
         // adding table with observations
 
-        this.add_table_ = this.default_add_table;
-
-        if (options.hasOwnProperty('add_table') && options.add_table != null ){
-            this.add_table_ = options.add_table;
-        }
-
         if(this.add_table_){
             this.createTable_();
         }
@@ -366,12 +377,14 @@ HTMLWidgets.widget({
                                             }
                                             })
                                .style('display', 'table-cell')
+                               //.style('border-right', 'solid #c4c4c4 1px')
+                               //.style('border-bottom', 'solid #c4c4c4 1px')
                                .style('height',  cellsHeight +'px').style('width', cellsWidth +'px')
                                .append('div').attr('class', 'divTable').style('display','table')
                                .append('div').attr('class', 'divTableBody cellBody').style('display','table-row-group')
                                .style('height',  cellsHeight +'px').style('width', cellsWidth +'px');
 
-        cells = this.userDiv_.selectAll(".cell");
+        //cells = this.userDiv_.selectAll(".cell");
 
         this.cellsHeight_ = cellsHeight;
         this.cellsWidth_ = cellsWidth;
@@ -410,6 +423,7 @@ HTMLWidgets.widget({
                     d3.select(this).append('div').style('background-color', '#c4c4c4').attr('class', 'divTableRow').style('display', 'table-row')
                                        .append('div').attr('class', 'divTableCell titleCell').style('display', 'table-cell')
                                         .style('text-align', 'center').style('font', font_size_titles + 'px sans-serif').text(variables[i]);
+                                          //TU .attr('height', cellsHeight*0.05), ale lepiej w sumie jak jest, ze im mniejsza/wieksza czcionka tym wiekszy/mniejszy div
 
                     // cell chart area
                     var chartArea = d3.select(this).append('div').attr('class', 'divTableRow').style('display', 'table-row')
@@ -434,7 +448,7 @@ HTMLWidgets.widget({
 
                     chartArea.append("g").attr("transform", "translate(0," + heightAvail + ")").style('font', font_size_axes + 'px sans-serif')
                     .attr("class", "axisX")
-                    .call(d3.axisBottom(scaleX).tickSizeOuter(0).tickSizeInner(-heightAvail).tickPadding(10).ticks(5).tickFormat(d3.format("d")));
+                    .call(d3.axisBottom(scaleX).tickSizeOuter(0).tickSizeInner(-heightAvail).tickPadding(10).ticks(3).tickFormat(d3.format("d")));
 
 
                     }
@@ -470,7 +484,7 @@ HTMLWidgets.widget({
 
                         chartArea.append("g").attr("transform", "translate(0," + heightAvail + ")")
                         .attr("class", "axisX").style('font', font_size_axes + 'px sans-serif')
-                        .call(d3.axisBottom(scaleX).tickSizeOuter(0).tickSizeInner(-heightAvail).tickPadding(2))
+                        .call(d3.axisBottom(scaleX).tickSizeOuter(0).tickSizeInner(-heightAvail).tickPadding(2).ticks(3))
                         .selectAll('text').attr('transform', 'rotate(-20)')
                         .style("text-anchor", "end");
                         //.attr("dy", "-.10em");
@@ -568,8 +582,9 @@ HTMLWidgets.widget({
 
         //var no_instances; //this.no_instances or whatever
         //if(!no_instances){ no_instances = 1;}else{no_instances = no_instances + 1;}
+        //.attr('id', 'icePlot'+no_instances) remember that class will be overwrite if you do attr(class,).attr(class,)
 
-        var g = mainG.append("g").attr("class", 'icePlot'),//.attr('id', 'icePlot'+no_instances)
+        var g = mainG.append("g").attr("class", 'icePlot'),
             per_id_model= d3.nest().key(function(d){return d['_ids_']+ '|' + d['_label_']}).entries(dataVar),
             scaleY = this.scaleY_,
             scaleColor = this.scaleColor_,
@@ -579,7 +594,8 @@ HTMLWidgets.widget({
             alpha_ices = this.alpha_ices_,
             size_ices = this.size_ices_,
             self = this,
-            is_color_variable = this.is_color_variable_;
+            is_color_variable = this.is_color_variable_,
+            formatPredTooltip = this.formatPredTooltip_;
 
         var line = d3.line()
                      .x(function(d) { return scaleX(d[variable]); })
@@ -657,7 +673,7 @@ HTMLWidgets.widget({
                   tooltipDiv.html( "<b> ICE line </b> <br/>" +
                                "obs. id: " + d['_ids_'] +  "<br/>" +
                                "model: " + d['_label_'] +  "<br/>" +
-                               "y_pred: " + d['_yhat_'].toFixed(2) +  "<br/>" +
+                               "y_pred: " + d3.format(formatPredTooltip)(d['_yhat_']) +  "<br/>" +
                                variable + ": " + d[variable] +  "<br/>"
                        )
                   .style("left", (d3.event.pageX ) + "px") // ustalamy pozycje elementu tam gdzie zostanie akcja podjeta
@@ -723,7 +739,8 @@ HTMLWidgets.widget({
             alpha_points = this.alpha_points_,
             size_points = this.size_points_,
             color_points = this.color_points_,
-            self = this;
+            self = this,
+            formatPredTooltip = this.formatPredTooltip_;
 
         var pointplots = g.selectAll('circle.point').data(per_id_model).enter().append("circle").attr('class', 'point')
          //.attr('id', function(x) {return 'linechart-' + x.key})
@@ -755,7 +772,7 @@ HTMLWidgets.widget({
                       tooltipDiv.html( "<b> Predicted point </b> <br/>" +
                                    "obs. id: " + dataPoint['_ids_'] +  "<br/>" +
                                    "model: " + dataPoint['_label_'] +  "<br/>" +
-                                   "y_pred: " + dataPoint['_yhat_'].toFixed(2) +  "<br/>" +
+                                   "y_pred: " + d3.format(formatPredTooltip)(dataPoint['_yhat_']) +  "<br/>" +
                                    variable + ": " + dataPoint[variable] +  "<br/>"
                            )
                       .style("left", (d3.event.pageX ) + "px") // ustalamy pozycje elementu tam gdzie zostanie akcja podjeta
@@ -873,7 +890,8 @@ HTMLWidgets.widget({
             alpha_residuals = this.alpha_residuals_,
             size_residuals = this.size_residuals_,
             color_residuals = this.color_residuals_,
-            self = this;
+            self = this,
+            formatPredTooltip = this.formatPredTooltip_;
 
         // residual lines
         var residuallines = g.selectAll('line.residualline').data(id_model).enter().append("line").attr('class', 'residualline')
@@ -930,9 +948,9 @@ HTMLWidgets.widget({
 
                       tooltipDiv.html( "<b> Data point </b> <br/>" +
                                    "obs. id: " + dataPoint['_ids_'] +  "<br/>" +
-                                   "y: " + dataPoint['_y_'].toFixed(2) +  "<br/>" +
-                                   "y_pred: " + dataPoint['_yhat_'].toFixed(2) +  "<br/>" +
-                                   "<b> residual: " + (dataPoint['_y_'] - dataPoint['_yhat_']).toFixed(2) +  "</b> <br/>" +
+                                   "y: " + dataPoint['_y_'] +  "<br/>" +
+                                   "y_pred: " + d3.format(formatPredTooltip)(dataPoint['_yhat_']) +  "<br/>" +
+                                   "<b> residual: " + d3.format(formatPredTooltip)(dataPoint['_y_'] - dataPoint['_yhat_']) +  "</b> <br/>" +
                                    variable + ": " + dataPoint[variable] +  "<br/>"
                            )
                       .style("left", (d3.event.pageX ) + "px") // ustalamy pozycje elementu tam gdzie zostanie akcja podjeta
@@ -1000,7 +1018,8 @@ HTMLWidgets.widget({
             alpha_pdps = this.alpha_pdps_,
             size_pdps = this.size_pdps_,
             color_pdps = this.color_pdps_,
-            self = this;
+            self = this,
+            formatPredTooltip = this.formatPredTooltip_;
 
         if(aggregate_profiles == 'mean'){
             var nested_data = d3.nest()
@@ -1052,7 +1071,7 @@ HTMLWidgets.widget({
 
                   tooltipDiv.html( "<b> PDP line </b> <br/>" +
                                "model: " + model +  "<br/>" +
-                               "y_pred: " + d.value.toFixed(2) +  "<br/>" +
+                               "y_pred: " + d3.format(formatPredTooltip)(d.value) +  "<br/>" +
                                variable + ": " + d.key +  "<br/>"
                        )
                   .style("left", (d3.event.pageX ) + "px") // ustalamy pozycje elementu tam gdzie zostanie akcja podjeta
@@ -1168,13 +1187,35 @@ HTMLWidgets.widget({
             var scale = d3.scaleOrdinal(defaultPaletteNum[no_colors]),
             scaleMin = d3.min(dataObs.map(function(x) {return x[color]})),
             scaleMax = d3.max(dataObs.map(function(x) {return x[color]})),
-            scaleDivisions = d3.range(scaleMin, scaleMax, (scaleMax - scaleMin)/no_colors) ,
+            scaleDivisions,
+            format,
             scaleDomain = [];
 
-            scaleDivisions.push(scaleMax);
-            scaleDivisions = scaleDivisions.map(function(x) {return x.toFixed(2)});
+            // nice() from d3 is making floor and ceil of domain start/end in smart way (attention it matters what we give as a second argument
+            // so if we want floor of scaleMin we give it as a first argument, and as a second we can't put anything bigger, cause it changes scaling)
+            scaleMin = d3.scaleLinear().domain([scaleMin, scaleMax]).nice().domain()[0]
+            scaleMax = d3.scaleLinear().domain([scaleMin, scaleMax]).nice().domain()[1]
 
-            scaleDivisions.forEach(function(d,i) {if(i < scaleDivisions.length - 1){scaleDomain.push('['+ d +';')}});
+            // to have also nice rounded difference we use nice also here
+            var diff = d3.scaleLinear().domain([0, (scaleMax - scaleMin)/no_colors]).nice().domain()[1]
+
+            // we create proper divisions
+            scaleDivisions = d3.range(scaleMin, scaleMax, diff);
+            scaleDivisions.push(scaleMax);
+            // making sure scaleMax is not duplicated
+            scaleDivisions = scaleDivisions.filter(function(item, pos) {return scaleDivisions.indexOf(item) == pos;})
+
+            // changing format to be sure that we have 0.7 when we add 0.3 + 0.4 not 0.699999999999
+
+            if( isFinite(((diff+'').split('.')[1])) ){
+                format = '.'+ ((diff+'').split('.')[1]).length+'f';
+            } else {format = '.0f'};
+
+            scaleDivisions = scaleDivisions.map(function(x) {return +d3.format(format)(x)});
+
+
+            // creating labels for legend keys
+            scaleDivisions.forEach(function(d,i) {if(i < scaleDivisions.length - 1){scaleDomain.push('['+ d +';')}}); //d3.format("~s")(d)
             scaleDivisions.forEach(function(d,i) {
             if(i > 0){
                 if(i == scaleDivisions.length - 1) {
@@ -1236,6 +1277,7 @@ HTMLWidgets.widget({
 
 
 
+
     CeterisParibusPlot.prototype.createTable_ = function(fn){
 
         var headers = Object.keys(this.dataObs_[0]),
@@ -1254,12 +1296,14 @@ HTMLWidgets.widget({
 
         var tableDivCP = this.userDiv_.append('div')
                         .attr('class', 'ceterisParibusD3 tableDivCP')
-                        .style('height', this.chartHeight_+'px')
+                        .style('max-height', this.chartHeight_+'px')
                         .style('width', this.chartWidth_+'px')
-                        .style('display',"block")
+                        .style('display',"table")
                         .style('font', this.font_size_table_ + 'px sans-serif');
 
-        var tableCP = tableDivCP.append('table').attr('class', 'tableCP display');
+        var tableCP = tableDivCP.append('table').attr('class', 'tableCP compact hover row-border nowrap') //display - css class from DataTable, nowrap - proper sizing of rows when little space
+                                .style('max-height', this.chartHeight_+'px')
+                                .style('width', this.chartWidth_+'px');
 
         var tableHead = tableCP.append('thead').append('tr')
             .selectAll('th').data(headers).enter().append("th").text(function(d){ return d;});
@@ -1271,15 +1315,23 @@ HTMLWidgets.widget({
             .style("cursor", "default");
 
         var tableCells = tableRows.selectAll('td')
-            .data(function(d){ return Object.values(d);}).enter().append("td").text(function(d){ return d;});
+            .data(function(d){
+                var val;
+
+                if (!Object.values){ val = Object.keys(d).map(function(e){return d[e];});}
+                else { val = Object.values(d); }
+
+                return val;
+                ;}).enter().append("td").text(function(d){ return d;});
 
         tableDivCP.style('min-height', tableCP.property('clientHeight') + 'px');
         //adding events for rows
 
         tableRows.on("mouseover", function(d){
 
-            d3.select(this)
+           /* d3.select(this)
             .attr("bgcolor", "#eee");
+          */ //not needed datatable hover class is doing it
 
             // highlight iceline
             var id = d['_ids_'],
@@ -1335,8 +1387,10 @@ HTMLWidgets.widget({
 
         tableRows.on("mouseout", function(d){
 
+            /*
             d3.select(this)
             .attr("bgcolor", "white");
+            */ //not needed datatable hover class is doing it
 
             var id = d['_ids_'],
                 model = d['_label_'];
@@ -1389,6 +1443,31 @@ HTMLWidgets.widget({
         });
 
         this.tableDivCP_ = tableDivCP;
+
+       // to use scrollX nicely https://datatables.net/examples/basic_init/scroll_x.html
+       tableDivCP.selectAll('th').style('white-space', 'nowrap');
+       tableDivCP.selectAll('td').style('white-space', 'nowrap');
+
+
+       var dt_options = {
+            "scrollX": true,
+            "paging": false,
+            "scrollY": 200,
+            "order": [[ 9, "asc" ]],
+            "scrollCollapse": true,
+            "dom": '<"toolbar">frtip', // for title of the table
+            "retrieve": true
+            }
+
+        dt_options.scrollY = this.chartHeight_*0.8; //scrollY parameter sets only table height without header
+        // cool table look
+        $(document).ready( function () {
+             $('.tableCP').DataTable(dt_options);
+             $("div.toolbar").html('<b>Dataset:</b>'); // for title of the table
+         } );
+        // attention: i don't have to create proper html table to do this, i can make it from JS object using DT options
+        // look here https://datatables.net/examples/data_sources/js_array.html
+
     };
 
 
@@ -1448,13 +1527,13 @@ HTMLWidgets.widget({
                 this.mainDivCP_.select(classToTake).select('.axisX')
                     .attr("transform", "translate(0," + this.heightAvail_ + ")")
                     .call(d3.axisBottom(this.scalesX_[this.variables_[i]]).tickSizeOuter(0).tickSizeInner(-this.heightAvail_)
-                        .tickPadding(10).ticks(5).tickFormat(d3.format("d")));
+                        .tickPadding(10).ticks(3).tickFormat(d3.format("d")));
             }
             else if (typeof this.scalesX_[this.variables_[i]].domain()[0] == 'string'){
                 this.scalesX_[this.variables_[i]] = this.scalesX_[this.variables_[i]].rangeRound([0+this.length_rugs_, this.widthAvail_]);
                 this.mainDivCP_.select(classToTake).select('.axisX')
                     .attr("transform", "translate(0," + this.heightAvail_ + ")")
-                    .call(d3.axisBottom(this.scalesX_[this.variables_[i]]).tickSizeOuter(0).tickSizeInner(-this.heightAvail_).tickPadding(2))
+                    .call(d3.axisBottom(this.scalesX_[this.variables_[i]]).tickSizeOuter(0).tickSizeInner(-this.heightAvail_).tickPadding(2).ticks(3))
                     .selectAll('text').attr('transform', 'rotate(-20)')
                     .style("text-anchor", "end");
             }
@@ -1524,10 +1603,10 @@ HTMLWidgets.widget({
              .attr('height', this.chartHeight_).attr('width',  (this.chartWidth_ - this.plotWidth_));
 
             this.legendDivCP_.select('text.legendTitle')
-            .attr('y', this.chartHeight_/2*0.9);
+            .attr('y', this.chartHeight_*0.1);
 
             this.legendDivCP_.select('g.legendKeysGroup')
-            .attr("transform", "translate(" + ((this.chartWidth_ - this.plotWidth_)/4) + "," + this.chartHeight_/2 +")");
+            .attr("transform", "translate(" + ((this.chartWidth_ - this.plotWidth_)*0.1) + "," + this.chartHeight_*0.2 +")");
 
         }
 
@@ -1743,8 +1822,8 @@ HTMLWidgets.widget({
 
     CeterisParibusPlot.prototype.resizePlot_ = function(width, height){
 
-        var w = this.chartWidth_,
-            h = this.chartHeight_;
+        var w = this.visWidth_, //this.chartWidth_,
+            h = this.visHeight_;   //chartHeight_;
 
         if ((width === null) != (height === null)) {
             console.warn("resizePlot_() should be called with no arguments or with 2 non-NULL arguments. Pretending there were no arguments passed.");
@@ -1752,34 +1831,35 @@ HTMLWidgets.widget({
         }
 
         if (width) {
-            this.chartWidth_ = width;
-            this.chartHeight_ = height/2;  // half of given height for chart, half for table
+            this.visWidth_ = width;
+            this.visHeight_ = height;
         } else {
 
-           this.chartWidth_ = this.userDiv_.property('clientWidth');
-           this.chartHeight_= this.userDiv_.property('clientHeight')/2;
+           this.visWidth_ = this.userDiv_.property('clientWidth');
+           this.visHeight_= this.userDiv_.property('clientHeight');
         }
 
 
-        if( Math.abs(w - this.chartWidth_) <= 1 && Math.abs(h - this.chartHeight_) <= 1 ){
+        this.chartWidth_ = this.visWidth_;
+
+        if(this.add_table_){
+            this.chartHeight_ = this.visHeight_/2;
+        } else {
+            this.chartHeight_ = this.visHeight_;
+        }
+
+        if( Math.abs(w - this.visWidth_) <= 1 && Math.abs(h - this.visHeight_) <= 1 ){
             console.log('too little changes in size to resize the plot:' +' in width: '+
-                Math.abs(w - this.chartWidth_) + ' in height: '+ Math.abs(w - this.chartWidth_))
+                Math.abs(w - this.visWidth_) + ' in height: '+ Math.abs(h - this.visHeight_))
             return;
         } else {
 
             this.changeSizeParameters_();
             this.updatePlotAfterResize_();
 
-            //TODO
-            // could set condition on min height and width
-            // change size of rect in legend while resizing
-            // change margins while resizing (specially for small sizes)
-            // change strokes and sizes of graphic element( circle r, stroke, line strokewidth)
-
         }
 
     };
-
 
     return {
 
