@@ -25,8 +25,7 @@ ICE curves for single observation:
 
 ICE curves for single observation - model comparison:
 
-<center><img width="600" src="images/multimodel_plot.jpg"></center>
-
+<center><img width="600" src="images/mutlimodel_plot.jpg"></center>
 
 ## More examples
 
