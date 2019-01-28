@@ -5,6 +5,7 @@ library("rpart")
 library("e1071")
 library(ceterisParibusD3)
 
+
 ####################################
 # example 1 - ICE lines with points
 ####################################
@@ -23,12 +24,12 @@ plot(cp_rf_A, show_profiles = TRUE, show_observations = TRUE,
      selected_variables = c("surface","construction.year"))
 
 ceterisParibusD3(cp_rf_A, show_profiles = TRUE, show_observations = TRUE,
-                 selected_variables = c("surface","construction.year"))
+                 selected_variables = c("surface","construction.year"), add_table = FALSE, height = 300)
 
 ####################################
 # example 2 ICE lines colored by categorical variable
 ####################################
-apartments_C <- select_sample(apartmentsTest, n = 15)
+apartments_C <- select_sample(apartmentsTest, n = 5)
 cp_rf_C <- ceteris_paribus(explainer_rf, apartments_C, y = apartments_C$m2.price)
 
 plot(cp_rf_C,
@@ -39,7 +40,8 @@ plot(cp_rf_C,
 # no need to include color variable in selected_variables
 ceterisParibusD3(cp_rf_C, show_profiles = TRUE, show_observations = FALSE,
                  color = 'district', alpha_ices = 1,
-                 selected_variables = c("surface","construction.year", 'no.rooms', 'floor'))
+                 selected_variables = c("surface","construction.year", 'no.rooms', 'floor'), height = 600,
+                 width = 800)
 
 ####################################
 # example 3 ICE lines colored by contiuous variable
@@ -81,7 +83,7 @@ ceterisParibusD3(cp_rf_C,
 ####################################
 # example 5 ICE lines with PDP lines
 ####################################
-
+apartments_C <- select_sample(apartmentsTest, n = 10)
 cp_rf_C <- ceteris_paribus(explainer_rf, apartments_C, y = apartments_C$m2.price)
 
 plot(cp_rf_C,
@@ -97,7 +99,8 @@ ceterisParibusD3(cp_rf_C,
      show_observations = FALSE, show_rugs = TRUE,
      show_residuals = TRUE, color_residuals = "red", size_residuals = 2,
      selected_variables = c("surface","construction.year"),
-     aggregate_profiles = 'mean', size_pdps = 5, alpha_pdps = 1)
+     aggregate_profiles = 'mean', size_pdps = 5, alpha_pdps = 1, width = 800, height = 600,
+     size_rugs = 0.5)
 
 ####################################
 # example 6 many models
@@ -127,7 +130,7 @@ plot(cp_rf_A, cp_rf_E, cp_rpart_F,
 
 ceterisParibusD3(cp_rf_A, cp_rf_E, cp_rpart_F,
      color = "_label_",
-     selected_variables = c("surface","construction.year"))
+     selected_variables = c("surface","construction.year"), width = 800)
 
 
 ####################################

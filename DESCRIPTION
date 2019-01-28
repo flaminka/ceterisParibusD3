@@ -5,7 +5,10 @@ Authors@R: person("Ewa", "Baranowska", email = "ewa.baranowska@wp.pl", role = c(
 Description: Package to create interactive Ceteris Paribus plots based on ceterisParibus package using D3.
 Depends: R (>= 3.4.4), htmlwidgets
 Suggests: randomForest, ceterisParibus
-License: What license is it under?
+Imports: ceterisParibus
+License: GPL-2
 Encoding: UTF-8
 LazyData: true
+URL: https://github.com/flaminka/ceterisParibusD3
+BugReports:  https://github.com/flaminka/ceterisParibusD3/issues
 RoxygenNote: 6.1.1

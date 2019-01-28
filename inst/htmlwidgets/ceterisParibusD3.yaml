@@ -10,5 +10,7 @@ dependencies:
   - name: DataTables
     version: 1.10.18
     src: "htmlwidgets/lib/DataTables-1.10.18"
-    script: js/jquery.dataTables.min.js
+    script:
+    - js/jquery.dataTables.min.js
+    - js/dataTables.scrollResize.min.js
     stylesheet: css/jquery.dataTables.min.css
