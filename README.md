@@ -43,7 +43,13 @@ To see help use R command:
 or see [manual](manual.pdf)
 
 
+## Issues and suggestions
 
+To report a bug or propose new feature please review these guidelines:
 
+* make sure you have the latest version of the package
+* check whether it is not already in [Issues](https://github.com/flaminka/ceterisParibusD3/issues)
+* add an issue following suitable template: for (bugs)[https://github.com/flaminka/ceterisParibusD3/blob/master/bug_template.md] or for (suggestions)[https://github.com/flaminka/ceterisParibusD3/blob/master/suggestion_template.md]
 
+       
 
