@@ -45,7 +45,7 @@ or see [manual](manual.pdf)
 
 ## Issues and suggestions
 
-To report a bug or propose new feature please review these guidelines:
+To report a bug or propose a new feature please review these guidelines:
 
 * make sure you have the latest version of the package
 * check whether it is not already in [Issues](https://github.com/flaminka/ceterisParibusD3/issues)
