@@ -1,10 +1,10 @@
 
 ## Issue reporting template
 
-To report a bug please follow these steps:
+Thanks for considering improving our package! :) To report a bug please follow these steps:
 
 * describe your problem - what package does and what you expect it to do instead
 * include a minimal code example that reproduces the problem
-* include screenshots of plots / console if available
-* ...
-* wait, until your issue is checked, we will contact you if there is a problem in communication
+* include screenshots of plots / console if available and any other context that you think can explain the problem better
+* give information about used: package version, R version, R IDE (name and version) and Browser (name and version, if applicable)
+* wait for our response - we will review your problem and provide feedback on it
