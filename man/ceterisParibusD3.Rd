@@ -5,19 +5,19 @@
 \title{Create interactive D3-based Ceteris Paribus Explanations Plots}
 \usage{
 ceterisParibusD3(model, ..., selected_variables = NULL, color = NULL,
-  width = NULL, height = NULL, no_colors = NULL,
-  categorical_order = NULL, size_rugs = NULL, alpha_rugs = NULL,
-  color_rugs = NULL, color_points = NULL, color_residuals = NULL,
-  color_pdps = NULL, alpha_residuals = NULL, alpha_points = NULL,
-  alpha_ices = NULL, alpha_pdps = NULL, size_points = NULL,
-  size_residuals = NULL, size_ices = NULL, size_pdps = NULL,
-  show_profiles = TRUE, show_observations = TRUE, show_rugs = NULL,
-  show_residuals = NULL, aggregate_profiles = NULL,
+  width = NULL, height = NULL, no_colors = 3,
+  is_categorical_ordered = FALSE, size_rugs = NULL,
+  alpha_rugs = NULL, color_rugs = NULL, color_points = NULL,
+  color_residuals = NULL, color_pdps = NULL, alpha_residuals = NULL,
+  alpha_points = NULL, alpha_ices = NULL, alpha_pdps = NULL,
+  size_points = NULL, size_residuals = NULL, size_ices = NULL,
+  size_pdps = NULL, show_profiles = TRUE, show_observations = TRUE,
+  show_rugs = NULL, show_residuals = NULL, aggregate_profiles = NULL,
   font_size_titles = NULL, font_size_legend = NULL,
   font_size_axes = NULL, font_size_tootlips = NULL,
   font_size_table = NULL, add_table = NULL,
   font_size_plot_title = NULL, plot_title = NULL, yaxis_title = NULL,
-  legend_keys_size = NULL)
+  auto_resize = TRUE)
 }
 \arguments{
 \item{model}{a ceteris paribus explainer produced with function `ceteris_paribus()` from ceterisParibus package}
@@ -26,17 +26,17 @@ ceterisParibusD3(model, ..., selected_variables = NULL, color = NULL,
 
 \item{selected_variables}{if not NULL then only `selected_variables` will be presented}
 
-\item{color}{a character. Either name of a color or name of a variable that should be used for coloring}
+\item{color}{a character. Either name of a color or name of a variable that should be used for coloring. If color is a categorical variable, it should have max. 9 categories. Use '_label_' to color by model type}
 
 \item{width}{a numeric. Width (in px) of the whole plot}
 
 \item{height}{a numeric. Heigth (in px) of the whole plot}
 
-\item{no_colors}{a numeric. Number of colors in legend for sequential scales}
+\item{no_colors}{a numeric. Number of colors in legend for sequential scales (currently available: between 1 and 9)}
 
-\item{categorical_order}{a list. List with order of values for categorical variables in form as follows: list(variableName = c('category1', 'category2'), variableName2 = c('category3', 'category4'))}
+\item{is_categorical_ordered}{a logical. If TRUE categorical variables values on x axis will be sorted alphabetically}
 
-\item{size_rugs}{a numeric. Size of rugs to be plotted}
+\item{size_rugs}{a numeric. Size of rugs to be plotted, between 0 and 1}
 
 \item{alpha_rugs}{a numeric between 0 and 1. Opacity of rug lines}
 
@@ -46,7 +46,7 @@ ceterisParibusD3(model, ..., selected_variables = NULL, color = NULL,
 
 \item{color_residuals}{a character. Name of a color. If NULL elements are plotted according to 'color' arguments}
 
-\item{color_pdps}{a character. Name of a color. If NULL elements are plotted according to 'color' arguments}
+\item{color_pdps}{a character. Name of a color.}
 
 \item{alpha_residuals}{a numeric between 0 and 1. Opacity of residuals}
 
@@ -92,7 +92,7 @@ ceterisParibusD3(model, ..., selected_variables = NULL, color = NULL,
 
 \item{yaxis_title}{a character. Vertical (y) axis title of the plot}
 
-\item{legend_keys_size}{a numeric. Size of legend keys in px}
+\item{auto_resize}{a logical. If FALSE plot's elements (like fonts or lines) won't be automatically resized when changinh size of the window.}
 }
 \value{
 a ceterisParibusD3 object

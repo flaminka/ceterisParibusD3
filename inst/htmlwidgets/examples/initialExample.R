@@ -9,6 +9,8 @@ library(ceterisParibusD3)
 ####################################
 # example 1 - ICE lines with points
 ####################################
+
+
 apartments_rf_model <- randomForest(m2.price ~ construction.year + surface + floor +
                                       no.rooms + district,
                                     data = apartments)
@@ -17,14 +19,18 @@ explainer_rf <- explain(apartments_rf_model,
                         data = apartmentsTest[,2:6],
                         y = apartmentsTest$m2.price)
 
-apartments_A <- apartmentsTest[958,]
+apartments_A <- apartmentsTest[c(958,955),]
+
 cp_rf_A <- ceteris_paribus(explainer_rf, apartments_A, y = apartments_A$m2.price)
 
 plot(cp_rf_A, show_profiles = TRUE, show_observations = TRUE,
-     selected_variables = c("surface","construction.year"))
+     selected_variables = c("surface","construction.year", 'no.rooms'))
 
 ceterisParibusD3(cp_rf_A, show_profiles = TRUE, show_observations = TRUE,
-                 selected_variables = c("surface","construction.year"), add_table = FALSE, height = 300)
+                 color = 'surface',
+                 selected_variables = c("surface","construction.year", 'no.rooms', 'district'), add_table = TRUE,
+                 height  = 800, width = 800, is_categorical_ordered = TRUE)
+
 
 ####################################
 # example 2 ICE lines colored by categorical variable
@@ -142,4 +148,7 @@ plot(cp_rf_A, show_profiles = TRUE, show_observations = TRUE,
 
 ceterisParibusD3(cp_rf_A, show_profiles = TRUE, show_observations = TRUE,
      selected_variables = c("surface","district"))
+
+
+
 

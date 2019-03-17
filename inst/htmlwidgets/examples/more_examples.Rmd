@@ -31,7 +31,7 @@ cp_rf_A <- ceteris_paribus(explainer_rf, apartments_A, y = apartments_A$m2.price
 plot(cp_rf_A, show_profiles = TRUE, show_observations = TRUE,
      selected_variables = c("surface","construction.year"))
 
-ceterisParibusD3(cp_rf_A, show_profiles = TRUE, show_observations = TRUE,
+ceterisParibusD3(cp_rf_A, show_profiles = TRUE, show_observations = TRUE, show_residuals = FALSE, show_rugs = FALSE,
                  selected_variables = c("surface","construction.year"), add_table = FALSE,
                  width = 800, height = 400)
 
@@ -49,10 +49,9 @@ plot(cp_rf_C,
      selected_variables = c("surface","construction.year", "district", 'no.rooms', 'floor'))
 
 # no need to include color variable in selected_variables
-ceterisParibusD3(cp_rf_C, show_profiles = TRUE, show_observations = FALSE,
+ceterisParibusD3(cp_rf_C, show_profiles = TRUE, show_observations = FALSE, show_residuals = FALSE, show_rugs = FALSE,
                  color = 'district', alpha_ices = 1,
-                 selected_variables = c("surface","construction.year", 'no.rooms', 'floor'),
-                 width = 800, height = 600)
+                 selected_variables = c("surface","construction.year", 'no.rooms', 'floor')) #, width = 800, height = 600)
 ```
 
 Example 3 - ICE curves colored by continous variable.
@@ -66,9 +65,9 @@ plot(cp_rf_C,
      color = "surface", alpha = 1,
      selected_variables = c("surface","construction.year"))
 
-ceterisParibusD3(cp_rf_C, show_profiles = TRUE, show_observations = TRUE,
+ceterisParibusD3(cp_rf_C, show_profiles = TRUE, show_observations = TRUE, show_residuals = FALSE, show_rugs = FALSE,
                  color = 'surface', alpha_ices = 1,
-                 selected_variables = c("surface","construction.year"), width = 800, height = 600)
+                 selected_variables = c("surface","construction.year") ) #, width = 800, height = 600)
 ```
 
 Example 4 - ICE curves, rugs, residuals, observation points, allwith custom colors, opacities and sizes.
@@ -91,7 +90,7 @@ ceterisParibusD3(cp_rf_C,
      color = "blue", color_points = "orange", color_residuals = "red", color_rugs = "green",
      alpha_ices = 0.3, alpha_points = 0.3, alpha_residuals = 0.5, alpha_rugs = 1,
      size_points = 4,  size_rugs = 0.5,
-     selected_variables = c("surface","construction.year"), width = 800, height = 800)
+     selected_variables = c("surface","construction.year") )#, width = 800, height = 800)
 ```
 
 Example 5 - ICE curves with PDP curves.
@@ -113,7 +112,7 @@ ceterisParibusD3(cp_rf_C,
      show_observations = FALSE, show_rugs = TRUE,
      show_residuals = TRUE, color_residuals = "red", size_residuals = 2,
      selected_variables = c("surface","construction.year"),
-     aggregate_profiles = 'mean', size_pdps = 5, alpha_pdps = 1, width = 800, height = 800)
+     aggregate_profiles = 'mean', size_pdps = 5, alpha_pdps = 1) #width = 800, height = 800)
 ```
 
 Example 6 - ICE curves per different model.
