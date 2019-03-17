@@ -1,12 +1,27 @@
 # ceterisParibusD3
 
-[ceterisParibus]( https://github.com/pbiecek/ceterisParibus) package extension (interactive plots in D3), built as htmlwidget. ceterisParibusD3 plots adds:
+## Intro
+
+Machine learning has been recently one of the hottest topics in business and science. In different settings, starting from the intuitive financial ones, through medical usages and ending in high-tech ones as speech recognition, people try to predict outcomes using different statistical models. Previously used algorithms such as linear regression, however simple and interpretable, now often give way to new, more effective models that unfortunately due to their complexity lack interpretability. To maintain both accuracy and interpretability of the model we can use model explanation techniques (so-called eXplainable Artificial Intelligence, XAI) that aim to explain such black-box models through various approaches. One of the most fundamental questions that can be posed regarding model explanation is how model response depends on features from a dataset, which can be answered using *Ceteris Paribus Profiles*. Such profiles show for given observation how model response would change with the change of its value for given variable, while keeping all other variables fixed (hence the name *Ceteris Paribus* - Latin phrase for *all else unchanged*).
+
+## ceterisParibusD3 package
+
+`ceterisParibusD3` package is an interactive (D3 based) extension (built as htmlwidget) of plots from [ceterisParibus]( https://github.com/pbiecek/ceterisParibus) R package. It allows user to plot standard charts from the parent package for *Ceteris Paribus profiles* , i.e. each chart can include:
+
+- **ICE** curves for single observation / group of observation / whole dataset
+- **PDP** curves that aggregate chosen ICE curves
+- **observation points**  and **rugs** corresponding to chosen ICE curves
+- **residuals** corresponding to chosen ICE curves
+
+Each chart can be also divided into subplots (panels) per variable from dataset and be coloured by variable (to see interactions between variables) or model type (to compare model behaviours).
+
+`ceterisParibusD3` package adds to these plots:
 
 - **tooltips** (shows info about given element (line, point) after hovering over it, hovering over an element causes also highlighting it on given panel (increasing its stroke, opacity or size) and highlighting elements related to the same data point in other panels)
 
 - **interactive table** (user can hover over each row, which causes highlighting elements related to this observation and hiding unrelated elements (apart from rugs and pdps), also filtering and sorting rows is available)
 
-<center><img width="600" src="images/interactivity.jpg"></center>
+<center><img width="600" src="img/interactivity.jpg"></center>
 
 
 ## Installation
