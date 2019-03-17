@@ -21,7 +21,7 @@ Each chart can be also divided into subplots (panels) per variable from dataset 
 
 - **interactive table** (user can hover over each row, which causes highlighting elements related to this observation and hiding unrelated elements (apart from rugs and pdps), also filtering and sorting rows is available)
 
-<center><img width="600" src="img/interactivity.jpg"></center>
+<center><img width="600" src="images/interactivity.jpg"></center>
 
 
 ## Installation
