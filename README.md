@@ -17,6 +17,12 @@ To install package use R command:
 devtools::install_github(repo = 'flaminka/ceterisParibus' )
 ```
 
+## Dependencies
+
+`ceterisParibusD3` depends on R package [htmwidget](https://www.htmlwidgets.org/) that integrates JS code from [ceterisParibusD3.js](https://github.com/MI2DataLab/ceterisParibusExt/tree/master/ceterisParibusD3) with R. Both of them are automatically attached during installation.
+
+Because `ceterisParibusD3` is a purely visualization package, it is suggested to install also R packages [ceterisParibus](https://github.com/pbiecek/ceterisParibus) and [DALEX](https://github.com/pbiecek/DALEX) that prepare data for our package (as shown e.g [here](inst/htmlwidgets/examples/more_examples.html)).
+
 ## Examples
 
 ICE curves for single observation:
