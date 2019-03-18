@@ -23,10 +23,11 @@ getwd()
 
 
 devtools::load_all()
-test()
-document()
-build()
-install()
+devtools::use_testthat()
+devtools::test()
+devtools::document()
+devtools::build()
+devtools::install()
 
 # sprawdzam czy help dziala
 library(ceterisParibusD3)

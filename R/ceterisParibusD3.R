@@ -41,7 +41,7 @@
 #' @param yaxis_title a character. Vertical (y) axis title of the plot
 #' @param auto_resize a logical. If FALSE plot's elements (like fonts or lines) won't be automatically resized when changinh size of the window.
 #'
-#' @import htmlwidgets ceterisParibus
+#' @import htmlwidgets ceterisParibus DALEX
 #'
 #' @return a ceterisParibusD3 object
 #' @name ceterisParibusD3
@@ -230,11 +230,13 @@ ceterisParibusD3 <- function(model, ...,
       if(!(color %in% all_variables)){
         stop("'color' is not a variable from given dataset nor a correct color name")
       }else if(is.character(all_profiles[,c(color)]) ||is.factor(all_profiles[,c(color)]) ){
-        if( length(unique(all_profiles[,c(color)])) > 12){  #chosen d3 color scale has 12 colors
-          stop(paste('Color variable has too many categories. Available: 12, given:',
+        if( length(unique(all_profiles[,c(color)])) > 10){  #chosen d3 color scale has 12 colors
+          stop(paste('Color variable has too many categories. Available: 10, given:',
                      length(unique(all_profiles[,c(color)])), '(reduce no of categories)'))
         }
       }else{
+        stopifnot(length(no_colors) == 1)
+        stopifnot(class(no_colors) == 'numeric')
         stopifnot(no_colors >=1 && no_colors <=9)
       }
     }
