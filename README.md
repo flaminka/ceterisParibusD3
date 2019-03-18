@@ -73,4 +73,9 @@ To report a bug or propose a new feature please review these guidelines:
 * add an issue following suitable template: for [bugs](https://github.com/flaminka/ceterisParibusD3/blob/master/bug_template.md) or for [suggestions](https://github.com/flaminka/ceterisParibusD3/blob/master/suggestion_template.md)
 
        
+## Acknowledgments
+
+Work on this package is financially supported by the NCN Opus grant 2017/27/B/ST6/01307.
+     
+       
 
