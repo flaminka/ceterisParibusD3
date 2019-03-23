@@ -23,7 +23,7 @@ Each chart can be also divided into subplots (panels) per variable from dataset 
 
 <center><img width="600" src="images/interactivity.jpg"></center>
 
-D3 engine of this R package `ceterisParibusD3` is available [here](https://github.com/MI2DataLab/ceterisParibusExt/tree/master/ceterisParibusD3), its implementation in Python is [`pyCeterisParibus`](https://github.com/ModelOriented/pyCeterisParibus).
+D3 engine of this R package `ceterisParibusD3` is available [here](https://github.com/ModelOriented/ceterisParibusD3), its implementation in Python is [`pyCeterisParibus`](https://github.com/ModelOriented/pyCeterisParibus).
 
 ## Installation
 
